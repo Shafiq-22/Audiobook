@@ -568,7 +568,7 @@ input[type="range"] {
       <button class="btn" id="saveKeyBtn">Save</button>
     </div>
     <div style="margin-top:8px; font-size:10px; color:var(--text3);">
-      Used for PDF text extraction · Stored in localStorage · Routed via corsproxy.io to resolve iOS/Safari CORS restrictions
+      Used for PDF text extraction · Stored in localStorage · Not transmitted elsewhere
     </div>
   </div>
 
@@ -812,11 +812,7 @@ async function startConvert() {
 }
 
 async function extractTextFromPDF(apiKey, base64) {
-  // CORS proxy required for direct browser use (especially iOS Safari).
-  // corsproxy.io forwards the request server-side, bypassing browser CORS restrictions.
-  const PROXY = 'https://corsproxy.io/?url=https://api.anthropic.com/v1/messages';
-
-  const response = await fetch(PROXY, {
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
